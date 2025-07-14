@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import User from "../models/user.model";
+import User, { IUser } from "../models/user.model";
 import { Request, Response } from "express";
 import generateToken from "../utils/generateToken";
 import cloudinary from "../config/cloudinary";
@@ -14,7 +14,11 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
 
     const token = generateToken(newUser._id.toString(), res);
     await newUser.save();

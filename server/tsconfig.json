@@ -9,8 +9,9 @@
     "strict": true,
     "typeRoots": [
       "node_modules/@types",
-      "./src/types"
-    ],
+      "src/@types"
+    ]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/@types"]
+
 }

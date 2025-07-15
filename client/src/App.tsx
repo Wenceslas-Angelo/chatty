@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import useAuthStore from "./store/useAuthStore";
+import { useThemeStore } from "./store/useThemeStore";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { Loader } from "lucide-react";
@@ -13,10 +14,11 @@ import { Navigate } from "react-router-dom";
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = useAuthStore();
-
+  const { theme } = useThemeStore();
   useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
     checkAuth();
-  }, [checkAuth]);
+  }, [checkAuth, theme]);
 
   console.log({ authUser });
 
@@ -28,7 +30,7 @@ function App() {
     );
 
   return (
-    <>
+    <div>
       <Navbar />
       <Routes>
         <Route
@@ -50,7 +52,7 @@ function App() {
         />
       </Routes>
       <Toaster />
-    </>
+    </div>
   );
 }
 

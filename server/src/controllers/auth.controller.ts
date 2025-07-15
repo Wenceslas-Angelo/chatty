@@ -78,7 +78,6 @@ export const updateProfile = async (req: Request, res: Response) => {
     if (!profilePicture) {
       return res.status(400).json({ error: "Profile picture is required" });
     }
-
     const userId = req.user?._id;
     if (!userId) {
       return res.status(401).json({ error: "Unauthorized" });

@@ -19,7 +19,10 @@ export const authMiddleware = (
       process.env.JWT_SECRET as string
     ) as JwtUserPayload;
 
-    req.user = decoded;
+    req.user = {
+      ...decoded,
+      _id: decoded.id,
+    };
 
     next();
   } catch (error: any) {

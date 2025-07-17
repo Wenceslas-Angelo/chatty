@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user.model";
 import Message from "../models/message.model";
 import cloudinary from "../config/cloudinary";
+import { getReceiverSocketId, io } from "../utils/socket";
 
 export const getUsersForSidebar = async (req: Request, res: Response) => {
   try {
@@ -52,6 +53,10 @@ export const sendMessage = async (req: Request, res: Response) => {
     });
 
     await newMessage.save();
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
     res.status(201).json(newMessage);
   } catch (error) {
     console.error("Message send error:", error);
